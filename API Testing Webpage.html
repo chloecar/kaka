@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Testing Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>API Testing Webpage</h1>
+        <div class="form-group">
+            <label for="url">API URL:</label>
+            <input type="text" id="url" placeholder="Enter API URL">
+        </div>
+        <div class="form-group">
+            <label for="method">HTTP Method:</label>
+            <select id="method">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="body">Request Body:</label>
+            <textarea id="body" placeholder="Enter request body (JSON format)"></textarea>
+        </div>
+        <button onclick="sendRequest()">Send Request</button>
+        <div class="response" id="response"></div>
+    </div>
+    <script>
+        async function sendRequest() {
+            const url = document.getElementById('url').value;
+            const method = document.getElementById('method').value;
+            const body = document.getElementById('body').value;
+            const responseDiv = document.getElementById('response');
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: method !== 'GET' ? body : null
+                });
+                const responseData = await response.json();
+                responseDiv.innerHTML = '<pre>' + JSON.stringify(responseData, null, 2) + '</pre>';
+            } catch (error) {
+                responseDiv.innerHTML = '<pre>' + error + '</pre>';
+            }
+        }
+    </script>
+</body>
+</html>
