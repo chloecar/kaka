@@ -7,6 +7,7 @@ import uuid
 import time
 from typing import List, Dict, Any
 
+
 # 禁用 SSL 警告
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
