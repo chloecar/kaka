@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Testing Webpage</title>
     <style>
+        /* General styles for the webpage */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -47,10 +48,12 @@
 <body>
     <div class="container">
         <h1>API Testing Webpage</h1>
+        <!-- Input field for API URL -->
         <div class="form-group">
             <label for="url">API URL:</label>
             <input type="text" id="url" placeholder="Enter API URL">
         </div>
+        <!-- Dropdown to select HTTP method -->
         <div class="form-group">
             <label for="method">HTTP Method:</label>
             <select id="method">
@@ -60,34 +63,49 @@
                 <option value="DELETE">DELETE</option>
             </select>
         </div>
+        <!-- Textarea for request body (used for POST/PUT requests) -->
         <div class="form-group">
             <label for="body">Request Body:</label>
             <textarea id="body" placeholder="Enter request body (JSON format)"></textarea>
         </div>
+        <!-- Button to send the API request -->
         <button onclick="sendRequest()">Send Request</button>
+        <!-- Div to display API response -->
         <div class="response" id="response"></div>
     </div>
     <script>
+        /**
+         * Sends an API request based on user input
+         */
         async function sendRequest() {
+            // Get user inputs: URL, HTTP method, and request body
             const url = document.getElementById('url').value;
             const method = document.getElementById('method').value;
             const body = document.getElementById('body').value;
             const responseDiv = document.getElementById('response');
 
             try {
+                // Send the API request using the Fetch API
                 const response = await fetch(url, {
                     method: method,
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json' // Set content type to JSON
                     },
-                    body: method !== 'GET' ? body : null
+                    body: method !== 'GET' ? body : null // Include body only for non-GET requests
                 });
+
+                // Parse the JSON response
                 const responseData = await response.json();
+
+                // Display the formatted JSON response in the response div
                 responseDiv.innerHTML = '<pre>' + JSON.stringify(responseData, null, 2) + '</pre>';
             } catch (error) {
+                // Display any errors that occur during the request
                 responseDiv.innerHTML = '<pre>' + error + '</pre>';
             }
         }
     </script>
 </body>
 </html>
+
+Each section of the code is now annotated with comments to describe its purpose and functionality.
